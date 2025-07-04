@@ -38,6 +38,9 @@ jobs:
       - name: Jest run
         run: yarn run dev && yarn run test
 
+      - name: Test setup-registry script
+        run: yarn run test:setup-registry
+
       - name: Report Fiber size
         run: yarn run analyze-fiber
 
