@@ -10,21 +10,21 @@ This demonstrates how the GitHub Package Registry setup enables portable package
 
    ```bash
    # Add to ~/.npmrc or project .npmrc
-   @abernier:registry=https://npm.pkg.github.com
+   @abernier-react-three:registry=https://npm.pkg.github.com
    //npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN
    ```
 
 2. **Install the forked packages:**
 
    ```bash
-   npm install @abernier/fiber
-   npm install @abernier/test-renderer
-   npm install @abernier/eslint-plugin
+   npm install @abernier-react-three/fiber
+   npm install @abernier-react-three/test-renderer
+   npm install @abernier-react-three/eslint-plugin
    ```
 
 3. **Use in your project (same API, different source):**
    ```jsx
-   import { Canvas } from '@abernier/fiber'
+   import { Canvas } from '@abernier-react-three/fiber'
    // Works exactly like @react-three/fiber but from abernier's fork
    ```
 
@@ -37,7 +37,7 @@ This demonstrates how the GitHub Package Registry setup enables portable package
 2. **Publish your packages:**
 
    ```bash
-   # Your packages will be published as @yourname/fiber, @yourname/test-renderer, etc.
+   # Your packages will be published as @yourname-react-three/fiber, @yourname-react-three/test-renderer, etc.
    yarn changeset:add
    yarn vers
    yarn release:github
@@ -47,12 +47,12 @@ This demonstrates how the GitHub Package Registry setup enables portable package
 
 4. **Your packages are now available to everyone:**
    ```bash
-   npm install @yourname/fiber
+   npm install @yourname-react-three/fiber
    ```
 
 ## Benefits for the Ecosystem
 
-- **No Conflicts**: Each fork uses its own scope (`@username/`)
+- **No Conflicts**: Each fork uses its own scope (`@username-react-three/`)
 - **Easy Distribution**: Anyone can publish and consume fork-specific packages
 - **Backward Compatible**: Original packages still work as `@react-three/fiber`
 - **Automatic**: GitHub Actions handle everything after initial setup

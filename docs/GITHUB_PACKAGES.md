@@ -16,9 +16,9 @@ The packages are published as:
 
 The packages are automatically renamed and published as:
 
-- `@abernier/fiber`
-- `@abernier/test-renderer`
-- `@abernier/eslint-plugin`
+- `@abernier-react-three/fiber`
+- `@abernier-react-three/test-renderer`
+- `@abernier-react-three/eslint-plugin`
 
 This allows each fork to maintain its own package namespace without conflicts.
 
@@ -68,7 +68,7 @@ Contains registry configuration for GitHub Package Registry. Uses environment va
 Helper script that:
 
 - Automatically detects the repository owner
-- Updates package names for forks (`@owner/package-name`)
+- Updates package names for forks (`@owner-react-three/package-name`)
 - Configures publishConfig for the appropriate registry
 - Can restore original names for npm publishing
 
@@ -84,14 +84,14 @@ First, configure npm to use GitHub Package Registry for the scoped packages:
 
 ```bash
 # Add to your .npmrc file
-@your-username:registry=https://npm.pkg.github.com
+@your-username-react-three:registry=https://npm.pkg.github.com
 ```
 
 Then install:
 
 ```bash
-npm install @your-username/fiber
-npm install @your-username/test-renderer
+npm install @your-username-react-three/fiber
+npm install @your-username-react-three/test-renderer
 ```
 
 ### Authentication for Private Packages
@@ -99,7 +99,7 @@ npm install @your-username/test-renderer
 If packages are published privately, you'll need authentication:
 
 ```bash
-npm login --scope=@your-username --registry=https://npm.pkg.github.com
+npm login --scope=@your-username-react-three --registry=https://npm.pkg.github.com
 ```
 
 Or add to your .npmrc:

@@ -26,7 +26,7 @@ jobs:
         with:
           node-version: 20
           registry-url: 'https://npm.pkg.github.com'
-          scope: '@react-three'
+          scope: ${{ github.repository_owner == 'pmndrs' && '@react-three' || format('@{0}-react-three', github.repository_owner) }}
 
       - name: Install dependencies
         run: yarn install --immutable

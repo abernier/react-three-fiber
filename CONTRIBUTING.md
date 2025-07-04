@@ -75,9 +75,9 @@ yarn release:github
 
 This will automatically:
 
-- Configure packages for your fork (e.g., `@your-username/fiber`)
+- Configure packages for your fork (e.g., `@your-username-react-three/fiber`)
 - Publish to GitHub Package Registry
-- Make packages available to anyone via `npm install @your-username/package-name`
+- Make packages available to anyone via `npm install @your-username-react-three/package-name`
 
 For more details on GitHub Package Registry publishing, see [docs/GITHUB_PACKAGES.md](docs/GITHUB_PACKAGES.md).
 

@@ -33,7 +33,7 @@ function updateNpmrcForGithub(repositoryOwner) {
 # Generated automatically by scripts/setup-registry.js
 
 @react-three:registry=https://npm.pkg.github.com
-${repositoryOwner ? `@${repositoryOwner}:registry=https://npm.pkg.github.com` : ''}
+${repositoryOwner ? `@${repositoryOwner}-react-three:registry=https://npm.pkg.github.com` : ''}
 //npm.pkg.github.com/:_authToken=\${NODE_AUTH_TOKEN}`
 
   fs.writeFileSync(npmrcPath, githubNpmrc)
@@ -61,7 +61,7 @@ function updatePackageForGithubRegistry(packagePath, repositoryOwner) {
   // Update package name to match repository owner for forks
   if (repositoryOwner && repositoryOwner !== 'pmndrs') {
     const [, packageSuffix] = packageJson.name.split('/')
-    packageJson.name = `@${repositoryOwner}/${packageSuffix}`
+    packageJson.name = `@${repositoryOwner}-react-three/${packageSuffix}`
   }
 
   // Ensure publishConfig points to GitHub Package Registry

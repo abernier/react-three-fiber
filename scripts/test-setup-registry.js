@@ -36,17 +36,17 @@ console.log('Testing setup-registry.js functionality...\n')
 // Test 1: Setup for GitHub Package Registry
 execSync('node scripts/setup-registry.js github', { cwd: rootDir })
 
-test('GitHub setup: fiber package name should be @abernier/fiber', () => {
+test('GitHub setup: fiber package name should be @abernier-react-three/fiber', () => {
   const pkg = readPackageJson('fiber')
-  if (pkg.name !== '@abernier/fiber') {
-    throw new Error(`Expected @abernier/fiber, got ${pkg.name}`)
+  if (pkg.name !== '@abernier-react-three/fiber') {
+    throw new Error(`Expected @abernier-react-three/fiber, got ${pkg.name}`)
   }
 })
 
-test('GitHub setup: test-renderer package name should be @abernier/test-renderer', () => {
+test('GitHub setup: test-renderer package name should be @abernier-react-three/test-renderer', () => {
   const pkg = readPackageJson('test-renderer')
-  if (pkg.name !== '@abernier/test-renderer') {
-    throw new Error(`Expected @abernier/test-renderer, got ${pkg.name}`)
+  if (pkg.name !== '@abernier-react-three/test-renderer') {
+    throw new Error(`Expected @abernier-react-three/test-renderer, got ${pkg.name}`)
   }
 })
 
@@ -59,7 +59,7 @@ test('GitHub setup: packages should have publishConfig for GitHub Package Regist
 
 test('GitHub setup: .npmrc should contain GitHub Package Registry configuration', () => {
   const npmrc = readNpmrc()
-  if (!npmrc.includes('npm.pkg.github.com') || !npmrc.includes('@abernier:registry')) {
+  if (!npmrc.includes('npm.pkg.github.com') || !npmrc.includes('@abernier-react-three:registry')) {
     throw new Error('Missing GitHub Package Registry configuration in .npmrc')
   }
 })
