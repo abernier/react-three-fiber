@@ -578,5 +578,5 @@ function Portal({ state = {}, children, container }: PortalProps): React.JSX.Ele
  * having to revert to a non-React solution.
  */
 export function flushSync<R>(fn: () => R): R {
-  return reconciler.flushSync(fn)
+  return (reconciler as any).flushSyncFromReconciler(fn)
 }
