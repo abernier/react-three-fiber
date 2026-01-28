@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client'
 import React, { useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import './styles.css'
+import './index.css'
 
 function Box(props) {
   // This reference will give us direct access to the mesh
