@@ -17,22 +17,13 @@ This document describes the process of converting any static Sandpack example (u
 
 ## Step-by-Step Process
 
-### 1. Backup Original Content
-
-Preserve the existing Sandpack files before removing them:
-
-```bash
-mkdir -p /tmp/sandpack-backup
-cp -r {sandpack-folder}/* /tmp/sandpack-backup/
-```
-
-### 2. Remove Old Sandpack Directory
+### 1. Remove Old Sandpack Directory
 
 ```bash
 rm -rf {sandpack-folder}
 ```
 
-### 3. Create New Vite App
+### 2. Create New Vite App
 
 Use `yarn create vite` to scaffold a new React application:
 
@@ -46,19 +37,19 @@ Select options:
 - Variant: JavaScript (or TypeScript if needed)
 - Install dependencies: No (will use workspace)
 
-### 4. Migrate Example Code
+### 3. Migrate Example Code
 
 Copy the original Sandpack files into the new Vite structure:
 
-1. **Copy main code file** from backup (e.g., `index.jsx`, `App.jsx`) to `src/main.jsx`
-2. **Copy styles** from backup (e.g., `styles.css`) to `src/index.css`
+1. **Copy main code file** from original sandpack folder (e.g., `index.jsx`, `App.jsx`) to `src/main.jsx`
+2. **Copy styles** from original sandpack folder (e.g., `styles.css`) to `src/index.css`
 3. **Adjust imports** in `src/main.jsx`:
    - Update CSS import path: `import './index.css'`
    - Ensure `createRoot` and component structure are correct for Vite entry point
 
 **Note**: The content of these files depends on your specific Sandpack example - just copy and adapt the existing component code.
 
-### 5. Configure Dependencies
+### 4. Configure Dependencies
 
 Update `package.json` to include dependencies from your Sandpack example:
 
@@ -78,7 +69,7 @@ Update `package.json` to include dependencies from your Sandpack example:
 - Copy other dependencies from the Sandpack `customSetup.dependencies` configuration
 - Match React/React-DOM versions with your monorepo
 
-### 6. Add to Yarn Workspaces
+### 5. Add to Yarn Workspaces
 
 Update root `package.json`:
 
@@ -91,7 +82,7 @@ Update root `package.json`:
 }
 ```
 
-### 7. Install Dependencies
+### 6. Install Dependencies
 
 ```bash
 yarn install
@@ -99,7 +90,7 @@ yarn install
 
 This installs dependencies for all workspaces, including the new example.
 
-### 8. Create README with Badges
+### 7. Create README with Badges
 
 Create a minimal `README.md` in the example directory:
 
@@ -112,7 +103,7 @@ Create a minimal `README.md` in the example directory:
 {Brief description of your example}
 ```
 
-### 9. Replace Sandpack in Documentation
+### 8. Replace Sandpack in Documentation
 
 Update your MDX documentation file where the Sandpack component was used:
 
