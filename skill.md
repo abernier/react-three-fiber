@@ -23,13 +23,13 @@ Preserve the existing Sandpack files before removing them:
 
 ```bash
 mkdir -p /tmp/sandpack-backup
-cp -r docs/getting-started/basic-example-sandpack/* /tmp/sandpack-backup/
+cp -r {path/to/example-folder}/* /tmp/sandpack-backup/
 ```
 
 ### 2. Remove Old Sandpack Directory
 
 ```bash
-rm -rf docs/getting-started/basic-example-sandpack
+rm -rf {path/to/example-folder}
 ```
 
 ### 3. Create New Vite App
@@ -37,8 +37,8 @@ rm -rf docs/getting-started/basic-example-sandpack
 Use `yarn create vite` to scaffold a new React application:
 
 ```bash
-cd docs/getting-started
-yarn create vite basic-example-sandpack --template react
+cd {parent-directory}
+yarn create vite {example-folder} --template react
 ```
 
 Select options:
@@ -48,7 +48,7 @@ Select options:
 
 ### 4. Migrate Example Code
 
-Move the original example code into the new Vite structure:
+Move the original example code into the new Vite structure.
 
 **Main entry (`src/main.jsx`):**
 ```jsx
@@ -57,6 +57,7 @@ import React, { useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import './index.css'
 
+// Your component code here
 function Box(props) {
   const meshRef = useRef()
   const [hovered, setHover] = useState(false)
@@ -123,7 +124,7 @@ Update root `package.json`:
   "workspaces": [
     "packages/*",
     "example",
-    "docs/getting-started/basic-example-sandpack"
+    "{path/to/example-folder}"
   ]
 }
 ```
@@ -136,58 +137,22 @@ yarn install
 
 This installs dependencies for all workspaces, including the new example.
 
-### 8. Fix ESLint Configuration
-
-Update `eslint.config.js` to use proper flat config format:
-
-```javascript
-import js from '@eslint/js'
-import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-
-export default [
-  { ignores: ['dist'] },
-  js.configs.recommended,
-  {
-    files: ['**/*.{js,jsx}'],
-    languageOptions: {
-      globals: globals.browser,
-      parserOptions: {
-        ecmaVersion: 'latest',
-        ecmaFeatures: { jsx: true },
-        sourceType: 'module',
-      },
-    },
-    plugins: {
-      'react-hooks': reactHooks,
-      'react-refresh': reactRefresh,
-    },
-    rules: {
-      ...reactHooks.configs.recommended.rules,
-      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
-      'no-unused-vars': ['error', { varsIgnorePattern: '^_' }],
-    },
-  },
-]
-```
-
-### 9. Create README with Badges
+### 8. Create README with Badges
 
 Create a minimal `README.md` in the example directory:
 
 ```markdown
-# Basic React Three Fiber Example
+# Example Title
 
-<a href="https://codesandbox.io/s/github/abernier/react-three-fiber/tree/master/docs/getting-started/basic-example-sandpack"><img src="https://img.shields.io/badge/codesandbox-040404?logo=codesandbox&logoColor=DBDBDB"></a>
-<a href="https://stackblitz.com/github/abernier/react-three-fiber/tree/master/docs/getting-started/basic-example-sandpack"><img src="https://img.shields.io/badge/stackblitz-fff?logo=Stackblitz&logoColor=1389FD"></a>
+<a href="https://codesandbox.io/s/github/{org}/{repo}/tree/{branch}/{path/to/example-folder}"><img src="https://img.shields.io/badge/codesandbox-040404?logo=codesandbox&logoColor=DBDBDB"></a>
+<a href="https://stackblitz.com/github/{org}/{repo}/tree/{branch}/{path/to/example-folder}"><img src="https://img.shields.io/badge/stackblitz-fff?logo=Stackblitz&logoColor=1389FD"></a>
 
-A basic React Three Fiber example with interactive rotating boxes.
+A brief description of your example.
 ```
 
-### 10. Replace Sandpack in Documentation
+### 9. Replace Sandpack in Documentation
 
-Update `docs/getting-started/introduction.mdx`:
+Update your MDX documentation file:
 
 **Before:**
 ```jsx
@@ -201,38 +166,18 @@ Update `docs/getting-started/introduction.mdx`:
     },
     entry: '/index.jsx',
   }}
-  folder="basic-example-sandpack"
+  folder="{example-folder}"
 />
 ```
 
 **After:**
 ```jsx
 <div>
-  <iframe src="https://stackblitz.com/github/abernier/react-three-fiber/tree/copilot/add-vite-app-to-workspaces/docs/getting-started/basic-example-sandpack?embed=1" 
+  <iframe src="https://stackblitz.com/github/{org}/{repo}/tree/{branch}/{path/to/example-folder}?embed=1" 
     className="w-full h-60 rounded-lg"
   />
-  <p className="mt-1 text-xs text-on-surface-variant">This is an embed iframe of https://stackblitz.com/github/abernier/react-three-fiber/tree/copilot/add-vite-app-to-workspaces/docs/getting-started/basic-example-sandpack</p>
+  <p className="mt-1 text-xs text-on-surface-variant">This is an embed iframe of https://stackblitz.com/github/{org}/{repo}/tree/{branch}/{path/to/example-folder}</p>
 </div>
-```
-
-### 11. Update Documentation Workflow
-
-Update `.github/workflows/docs.yml` to use latest tooling:
-
-```yaml
-jobs:
-  build:
-    uses: pmndrs/docs/.github/workflows/build.yml@main
-    with:
-      mdx: 'docs'
-      libname: 'React Three Fiber'
-      libname_short: 'r3f'
-      home_redirect: '/getting-started/introduction'
-      icon: '🇨🇭'
-      logo: '/logo.jpg'
-      github: 'https://github.com/pmndrs/react-three-fiber'
-      discord: 'https://discord.com/channels/740090768164651008/740093168770613279'
-      docker_tag: 'latest'
 ```
 
 ## Verification
@@ -240,10 +185,10 @@ jobs:
 Test the workspace app locally:
 
 ```bash
-yarn workspace basic-example-sandpack dev
+yarn workspace {example-folder} dev
 ```
 
-The app should run at `http://localhost:5173/` and display interactive 3D boxes.
+The app should run at `http://localhost:5173/` and display your example.
 
 ## Benefits
 
@@ -257,7 +202,6 @@ The app should run at `http://localhost:5173/` and display interactive 3D boxes.
 
 - Use `"*"` for workspace package versions to reference local versions
 - Mark intentionally unused parameters with underscore prefix (e.g., `_state`)
-- Use ESLint flat config format (no `extends` property)
 - Keep README minimal but informative
 - Include badges for online IDE access (CodeSandbox, StackBlitz)
 - Update StackBlitz URL to reference correct branch during PR review
@@ -265,9 +209,8 @@ The app should run at `http://localhost:5173/` and display interactive 3D boxes.
 ## Files Modified
 
 - `package.json` (root) - Add workspace
-- `docs/getting-started/introduction.mdx` - Replace Sandpack with iframe
-- `.github/workflows/docs.yml` - Update docs build workflow
-- `docs/getting-started/basic-example-sandpack/` - New Vite app directory
+- Documentation MDX file - Replace Sandpack with iframe
+- `{path/to/example-folder}/` - New Vite app directory
 
 ## Example Result
 
