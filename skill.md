@@ -2,11 +2,11 @@
 
 ## Overview
 
-This document describes the process of converting a static Sandpack example (used in pmndrs/docs documentation) into a full-fledged Vite workspace application that can be embedded via StackBlitz iframe.
+This document describes the process of converting any static Sandpack example (used in pmndrs/docs documentation) into a full-fledged Vite workspace application that can be embedded via StackBlitz iframe.
 
 ## Context
 
-- **Before**: Static files (`index.jsx`, `styles.css`) referenced by `<Sandpack>` component in MDX documentation
+- **Before**: Static files (e.g., `index.jsx`, `styles.css`) referenced by `<Sandpack>` component in MDX documentation
 - **After**: Full Vite app integrated as yarn workspace, embedded via StackBlitz iframe in documentation
 
 ## Prerequisites
@@ -23,13 +23,13 @@ Preserve the existing Sandpack files before removing them:
 
 ```bash
 mkdir -p /tmp/sandpack-backup
-cp -r {path/to/example-folder}/* /tmp/sandpack-backup/
+cp -r {path/to/*-sandpack}/* /tmp/sandpack-backup/
 ```
 
 ### 2. Remove Old Sandpack Directory
 
 ```bash
-rm -rf {path/to/example-folder}
+rm -rf {path/to/*-sandpack}
 ```
 
 ### 3. Create New Vite App
@@ -38,7 +38,7 @@ Use `yarn create vite` to scaffold a new React application:
 
 ```bash
 cd {parent-directory}
-yarn create vite {example-folder} --template react
+yarn create vite {new-folder-name} --template react
 ```
 
 Select options:
@@ -48,72 +48,35 @@ Select options:
 
 ### 4. Migrate Example Code
 
-Move the original example code into the new Vite structure.
+Copy the original Sandpack files into the new Vite structure:
 
-**Main entry (`src/main.jsx`):**
-```jsx
-import { createRoot } from 'react-dom/client'
-import React, { useRef, useState } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
-import './index.css'
+1. **Copy main code file** from backup (e.g., `index.jsx`, `App.jsx`) to `src/main.jsx`
+2. **Copy styles** from backup (e.g., `styles.css`) to `src/index.css`
+3. **Adjust imports** in `src/main.jsx`:
+   - Update CSS import path: `import './index.css'`
+   - Ensure `createRoot` and component structure are correct for Vite entry point
 
-// Your component code here
-function Box(props) {
-  const meshRef = useRef()
-  const [hovered, setHover] = useState(false)
-  const [active, setActive] = useState(false)
-  useFrame((_state, delta) => (meshRef.current.rotation.x += delta))
-  return (
-    <mesh
-      {...props}
-      ref={meshRef}
-      scale={active ? 1.5 : 1}
-      onClick={() => setActive(!active)}
-      onPointerOver={() => setHover(true)}
-      onPointerOut={() => setHover(false)}>
-      <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} />
-    </mesh>
-  )
-}
-
-createRoot(document.getElementById('root')).render(
-  <Canvas>
-    <ambientLight intensity={Math.PI / 2} />
-    <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} decay={0} intensity={Math.PI} />
-    <pointLight position={[-10, -10, -10]} decay={0} intensity={Math.PI} />
-    <Box position={[-1.2, 0, 0]} />
-    <Box position={[1.2, 0, 0]} />
-  </Canvas>,
-)
-```
-
-**Styles (`src/index.css`):**
-```css
-html,
-body,
-#root {
-  height: 100%;
-  margin: unset;
-}
-```
+**Note**: The content of these files depends on your specific Sandpack example - just copy and adapt the existing component code.
 
 ### 5. Configure Dependencies
 
-Update `package.json` to use local workspace packages:
+Update `package.json` to include dependencies from your Sandpack example:
 
 ```json
 {
   "dependencies": {
-    "@react-three/fiber": "*",
+    "{your-workspace-package}": "*",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "three": "^0.172.0"
+    "react-dom": "^19.2.0"
+    // Add any other dependencies from the original Sandpack customSetup
   }
 }
 ```
 
-Using `"*"` for `@react-three/fiber` ensures it uses the local monorepo version.
+**Key points**:
+- Use `"*"` for workspace packages to reference local monorepo versions
+- Copy other dependencies from the Sandpack `customSetup.dependencies` configuration
+- Match React/React-DOM versions with your monorepo
 
 ### 6. Add to Yarn Workspaces
 
@@ -123,8 +86,7 @@ Update root `package.json`:
 {
   "workspaces": [
     "packages/*",
-    "example",
-    "{path/to/example-folder}"
+    "{path/to/new-folder}"
   ]
 }
 ```
@@ -142,41 +104,36 @@ This installs dependencies for all workspaces, including the new example.
 Create a minimal `README.md` in the example directory:
 
 ```markdown
-# Example Title
+# {Example Title}
 
-<a href="https://codesandbox.io/s/github/{org}/{repo}/tree/{branch}/{path/to/example-folder}"><img src="https://img.shields.io/badge/codesandbox-040404?logo=codesandbox&logoColor=DBDBDB"></a>
-<a href="https://stackblitz.com/github/{org}/{repo}/tree/{branch}/{path/to/example-folder}"><img src="https://img.shields.io/badge/stackblitz-fff?logo=Stackblitz&logoColor=1389FD"></a>
+<a href="https://codesandbox.io/s/github/{org}/{repo}/tree/{branch}/{path/to/folder}"><img src="https://img.shields.io/badge/codesandbox-040404?logo=codesandbox&logoColor=DBDBDB"></a>
+<a href="https://stackblitz.com/github/{org}/{repo}/tree/{branch}/{path/to/folder}"><img src="https://img.shields.io/badge/stackblitz-fff?logo=Stackblitz&logoColor=1389FD"></a>
 
-A brief description of your example.
+{Brief description of your example}
 ```
 
 ### 9. Replace Sandpack in Documentation
 
-Update your MDX documentation file:
+Update your MDX documentation file where the Sandpack component was used:
 
 **Before:**
 ```jsx
 <Sandpack
   customSetup={{
-    dependencies: {
-      'react': 'latest',
-      'react-dom': 'latest',
-      'three': 'latest',
-      '@react-three/fiber': 'latest'
-    },
+    dependencies: { /* ... */ },
     entry: '/index.jsx',
   }}
-  folder="{example-folder}"
+  folder="{sandpack-folder}"
 />
 ```
 
 **After:**
 ```jsx
 <div>
-  <iframe src="https://stackblitz.com/github/{org}/{repo}/tree/{branch}/{path/to/example-folder}?embed=1" 
+  <iframe src="https://stackblitz.com/github/{org}/{repo}/tree/{branch}/{path/to/folder}?embed=1" 
     className="w-full h-60 rounded-lg"
   />
-  <p className="mt-1 text-xs text-on-surface-variant">This is an embed iframe of https://stackblitz.com/github/{org}/{repo}/tree/{branch}/{path/to/example-folder}</p>
+  <p className="mt-1 text-xs text-on-surface-variant">This is an embed iframe of https://stackblitz.com/github/{org}/{repo}/tree/{branch}/{path/to/folder}</p>
 </div>
 ```
 
@@ -185,7 +142,7 @@ Update your MDX documentation file:
 Test the workspace app locally:
 
 ```bash
-yarn workspace {example-folder} dev
+yarn workspace {folder-name} dev
 ```
 
 The app should run at `http://localhost:5173/` and display your example.
@@ -205,15 +162,17 @@ The app should run at `http://localhost:5173/` and display your example.
 - Keep README minimal but informative
 - Include badges for online IDE access (CodeSandbox, StackBlitz)
 - Update StackBlitz URL to reference correct branch during PR review
+- Preserve all functionality from the original Sandpack example
 
 ## Files Modified
 
 - `package.json` (root) - Add workspace
 - Documentation MDX file - Replace Sandpack with iframe
-- `{path/to/example-folder}/` - New Vite app directory
+- `{path/to/folder}/` - New Vite app directory
 
-## Example Result
+## Common Patterns
 
-![Working Example](https://github.com/user-attachments/assets/3504a51c-3f81-4509-89c8-cb60fe8a4497)
-
-Interactive 3D boxes that rotate continuously, turn hotpink on hover, and scale up when clicked.
+- Most Sandpack examples have an entry file (`index.jsx`, `App.jsx`) → becomes `src/main.jsx`
+- Styles file (`styles.css`, `index.css`) → becomes `src/index.css`
+- Dependencies from Sandpack `customSetup.dependencies` → go into Vite app's `package.json`
+- Workspace packages should use `"*"` version to reference local builds
