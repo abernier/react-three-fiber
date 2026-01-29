@@ -23,13 +23,13 @@ Preserve the existing Sandpack files before removing them:
 
 ```bash
 mkdir -p /tmp/sandpack-backup
-cp -r {path/to/*-sandpack}/* /tmp/sandpack-backup/
+cp -r {sandpack-folder}/* /tmp/sandpack-backup/
 ```
 
 ### 2. Remove Old Sandpack Directory
 
 ```bash
-rm -rf {path/to/*-sandpack}
+rm -rf {sandpack-folder}
 ```
 
 ### 3. Create New Vite App
