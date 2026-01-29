@@ -32,18 +32,12 @@ Yes. It merely expresses Threejs in JSX, `<mesh />` dynamically turns into `new 
 
 Let's make a re-usable component that has its own state, reacts to user-input and participates in the render-loop:
 
-<Sandpack
-  customSetup={{
-    dependencies: {
-      'react': 'latest',
-      'react-dom': 'latest',
-      'three': 'latest',
-      '@react-three/fiber': 'latest'
-    },
-    entry: '/index.jsx',
-  }}
-  folder="basic-example-sandpack"
-/>
+<div>
+  <iframe src="https://stackblitz.com/github/abernier/react-three-fiber/tree/copilot/add-vite-app-to-workspaces/docs/getting-started/basic-example?embed=1" 
+    className="w-full h-60 rounded-lg"
+  />
+  <p className="mt-1 text-xs text-on-surface-variant">This is an embed iframe of https://stackblitz.com/github/abernier/react-three-fiber/tree/copilot/add-vite-app-to-workspaces/docs/getting-started/basic-example</p>
+</div>
 
 <details>
   <summary>Show TypeScript example</summary>

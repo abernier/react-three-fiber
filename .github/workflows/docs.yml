@@ -11,7 +11,7 @@ concurrency:
 
 jobs:
   build:
-    uses: pmndrs/docs/.github/workflows/build.yml@v2
+    uses: pmndrs/docs/.github/workflows/build.yml@main
     with:
       mdx: 'docs'
       libname: 'React Three Fiber'
@@ -21,6 +21,7 @@ jobs:
       logo: '/logo.jpg'
       github: 'https://github.com/pmndrs/react-three-fiber'
       discord: 'https://discord.com/channels/740090768164651008/740093168770613279'
+      docker_tag: 'latest'
 
   deploy:
     needs: build
